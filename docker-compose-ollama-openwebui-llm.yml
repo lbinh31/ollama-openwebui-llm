@@ -11,8 +11,8 @@ services:
       - ./init-ollama.sh:/init-ollama.sh
     ports:
       - "11434:11434" #  Ollama API port
-    entrypoint: ["/bin/sh", "-c"]
-    command: "chmod +x /init-ollama.sh && /init-ollama.sh && /init-ollama.sh"
+    entrypoint: /bin/sh
+    command: -c "chmod +x /init-ollama.sh && /init-ollama.sh"
     restart: unless-stopped
 
   openwebui:
