@@ -8,8 +8,11 @@ services:
     container_name: ollama
     volumes:
       - ollama_data:/root/.ollama  # Persist model data.  **CRITICAL for long-term use**
+      - ./init-ollama.sh:/init-ollama.sh
     ports:
       - "11434:11434" #  Ollama API port
+    entrypoint: ["/bin/sh", "-c"]
+    command: "chmod +x /init-ollama.sh && /init-ollama.sh && /init-ollama.sh"
     restart: unless-stopped
 
   openwebui:
