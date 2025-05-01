@@ -1,0 +1,34 @@
+### DOCKER COMPOSE RUN OLLAMA:LATEST AND OPEN WEBUI
+### GEMINI "docker compose run ollama:latest and openwebui. Include persistent data binding."
+### https://hub.docker.com/r/ollama/ollama/tags
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    volumes:
+      - ollama_data:/root/.ollama  # Persist model data.  **CRITICAL for long-term use**
+    ports:
+      - "11434:11434" #  Ollama API port
+    restart: unless-stopped
+
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:latest
+    container_name: open-webui
+    ports:
+      - "3000:8080"
+    volumes:
+      - open-webui_data:/app/backend/data
+
+volumes:
+  ollama_data:  # Define the persistent volume for Ollama
+  open-webui_data:
+
+#################################################################################################
+
+# Run Gemma3 model with verbose in Ollama exec mode
+# List of LLM model from Ollama official site, https://ollama.com/library?sort=newest
+# ollama run --verbose gemma3
+# ollama run --verbose mistral:7b
+# ollama run --verbose deepseek-r1:8b
+
